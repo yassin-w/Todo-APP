@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,7 +27,7 @@ class _AddTodoState extends State<AddTodo> {
           style: TextStyle(fontSize: 28, color: Color(0xffFFECEF)),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xff251B37),
+        backgroundColor: Color(0xff3d2e58),
       ),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 60),
@@ -100,15 +100,13 @@ class _AddTodoState extends State<AddTodo> {
                     height: 30,
                   ),
                   ElevatedButton(
-                    onPressed: () {
-                      ToDo newToDo = ToDo(
-                          name: nameController.text,
-                          description: descriptionController.text,
-                          date: dateController.text,
-                          isComplete: false);
-                      todoController.addTodo(newToDo);
-
-                      Navigator.popAndPushNamed(context, "/");
+                    onPressed: () async {
+                      await todoController.addTodo(
+                          nameController.text.trim(),
+                          descriptionController.text.trim(),
+                          dateController.text.trim(),
+                          false);
+                      Navigator.popAndPushNamed(context, "/add");
                     },
                     style: ButtonStyle(
                       backgroundColor:
@@ -129,7 +127,7 @@ class _AddTodoState extends State<AddTodo> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: SizedBox(
         width: double.infinity,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

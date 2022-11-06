@@ -6,12 +6,14 @@ import 'controllers/todoController.dart';
 import 'models/todo.dart';
 
 class CustomCard extends StatefulWidget {
+  String id;
   String name;
   String description;
   String date;
   bool isComplete;
   CustomCard(
       {Key? key,
+      required this.id,
       required this.name,
       required this.description,
       required this.date,
@@ -56,22 +58,8 @@ class _CustomCardComp extends State<CustomCard> {
                   ),
                   IconButton(
                       onPressed: () {
-                        setState(() {
-                          for (ToDo todo in todoController.tasks) {
-                            if (todo.name
-                                        .compareTo(widget.name.toString()) ==
-                                    0 &&
-                                todo.date.compareTo(widget.date.toString()) ==
-                                    0 &&
-                                todo.description.compareTo(
-                                        widget.description.toString()) ==
-                                    0) {
-                              todoController.removeTodo(todo);
-                              break;
-                            }
-                          }
-                          Navigator.popAndPushNamed(context, "/");
-                        });
+                        todoController.removeTodo(widget.id);
+                        Navigator.popAndPushNamed(context, "/");
                       },
                       icon: Icon(Icons.delete))
                 ],
