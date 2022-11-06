@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, deprecated_member_use, prefer_collection_literals, no_leading_underscores_for_local_identifiers, avoid_print, unnecessary_overrides, unnecessary_string_interpolations
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import '../models/todo.dart';
@@ -47,6 +48,7 @@ class TodoController extends GetxController {
         })
         .then((value) => print("todo data added "))
         .catchError((error) => print("can not add"));
+    Get.back();
   }
 
   Future<void> getData() async {
@@ -54,7 +56,7 @@ class TodoController extends GetxController {
 
     try {
       QuerySnapshot _taskSnap =
-          await FirebaseFirestore.instance.collection('todos').get();
+          await FirebaseFirestore.instance.collection('todos').orderBy('name').get();
       print(_taskSnap.docs.length);
       tasks.clear();
 

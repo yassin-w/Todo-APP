@@ -100,13 +100,13 @@ class _AddTodoState extends State<AddTodo> {
                     height: 30,
                   ),
                   ElevatedButton(
-                    onPressed: () async {
-                      await todoController.addTodo(
+                    onPressed: ()  {
+                          todoController.addTodo(
                           nameController.text.trim(),
                           descriptionController.text.trim(),
                           dateController.text.trim(),
                           false);
-                      Navigator.popAndPushNamed(context, "/add");
+                      Navigator.popAndPushNamed(context, "/");
                     },
                     style: ButtonStyle(
                       backgroundColor:
