@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_app/pages/listtodos.dart';
 import 'controllers/todoController.dart';
-import 'models/todo.dart';
 
 class CustomCard extends StatefulWidget {
   String id;
@@ -30,13 +30,10 @@ class _CustomCardComp extends State<CustomCard> {
 
     return Card(
       shape: RoundedRectangleBorder(
-        side: BorderSide(
-          color: Colors.purpleAccent,
-        ),
         borderRadius: BorderRadius.circular(20.0),
       ),
       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-      color: Colors.white70,
+      color: Color.fromARGB(179, 208, 194, 211),
       child: SizedBox(
         width: 350,
         height: 165,
@@ -59,7 +56,7 @@ class _CustomCardComp extends State<CustomCard> {
                   IconButton(
                       onPressed: () {
                         todoController.removeTodo(widget.id);
-                        Navigator.popAndPushNamed(context, "/");
+                        Get.to(ListTodos());
                       },
                       icon: Icon(Icons.delete))
                 ],

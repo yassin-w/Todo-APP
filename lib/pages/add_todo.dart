@@ -2,8 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_app/controllers/authController.dart';
+import 'package:todo_app/pages/listtodos.dart';
 import '../controllers/todoController.dart';
-import '../models/todo.dart';
 
 class AddTodo extends StatefulWidget {
   const AddTodo({super.key});
@@ -100,13 +101,14 @@ class _AddTodoState extends State<AddTodo> {
                     height: 30,
                   ),
                   ElevatedButton(
-                    onPressed: ()  {
-                          todoController.addTodo(
+                    onPressed: () {
+                      todoController.addTodo(
                           nameController.text.trim(),
                           descriptionController.text.trim(),
                           dateController.text.trim(),
-                          false);
-                      Navigator.popAndPushNamed(context, "/");
+                          false,
+                          AuthController.instance.auth.currentUser!.uid);
+                      Get.to(ListTodos());
                     },
                     style: ButtonStyle(
                       backgroundColor:
@@ -134,7 +136,7 @@ class _AddTodoState extends State<AddTodo> {
           children: [
             ElevatedButton.icon(
               onPressed: () {
-                Navigator.popAndPushNamed(context, "/");
+                Get.to(ListTodos());
               },
               icon: Icon(Icons.home),
               style: ButtonStyle(
@@ -150,7 +152,7 @@ class _AddTodoState extends State<AddTodo> {
             ),
             ElevatedButton.icon(
               onPressed: () {
-                Navigator.popAndPushNamed(context, "/add");
+                Get.to(AddTodo());
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.purple[100]),

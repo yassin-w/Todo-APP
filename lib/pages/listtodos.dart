@@ -1,13 +1,17 @@
 // ignore_for_file: prefer_const_constructors, unused_local_variable, no_leading_underscores_for_local_identifiers, unused_element
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../card.dart';
+import '../controllers/authController.dart';
 import '../controllers/todoController.dart';
 import '../models/todo.dart';
 import 'package:get/get.dart';
 
+import 'add_todo.dart';
+
 class ListTodos extends StatefulWidget {
-  const ListTodos({super.key});
+  ListTodos({super.key});
 
   @override
   State<ListTodos> createState() => _ListTodosState();
@@ -23,13 +27,20 @@ class _ListTodosState extends State<ListTodos> {
         init: TodoController(),
         initState: (_) {},
         builder: (todoController) {
-          todoController.getData();
+          todoController.getData(AuthController.instance.auth.currentUser!.uid);
           return Scaffold(
             appBar: AppBar(
               title: Text(
                 "ToDo App",
                 style: TextStyle(fontSize: 28, color: Color(0xffFFECEF)),
               ),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      AuthController.instance.logout();
+                    },
+                    icon: Icon(Icons.logout))
+              ],
               backgroundColor: Color(0xff3d2e58),
               centerTitle: true,
             ),
@@ -123,9 +134,7 @@ class _ListTodosState extends State<ListTodos> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton.icon(
-                    onPressed: () {
-                      Navigator.popAndPushNamed(context, "/");
-                    },
+                    onPressed: () {},
                     icon: Icon(Icons.home),
                     style: ButtonStyle(
                       backgroundColor:
@@ -141,7 +150,7 @@ class _ListTodosState extends State<ListTodos> {
                   ),
                   ElevatedButton.icon(
                     onPressed: () {
-                      Navigator.popAndPushNamed(context, "/add");
+                      Get.to(AddTodo());
                     },
                     style: ButtonStyle(
                       backgroundColor:

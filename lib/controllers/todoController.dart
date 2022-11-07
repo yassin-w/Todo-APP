@@ -1,8 +1,6 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, deprecated_member_use, prefer_collection_literals, no_leading_underscores_for_local_identifiers, avoid_print, unnecessary_overrides, unnecessary_string_interpolations
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, deprecated_member_use, prefer_collection_literals, no_leading_underscores_for_local_identifiers, avoid_print, unnecessary_overrides, unnecessary_string_interpolations, file_names
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import '../models/todo.dart';
 
 class TodoController extends GetxController {
@@ -37,26 +35,30 @@ class TodoController extends GetxController {
   //   tasks.value = todoResult;
   // }
 
-  Future<void> addTodo(
-      String name, String description, String date, bool isComplete) async {
-    return todos
+  Future<void> addTodo(String name, String description, String date,
+      bool isComplete, String uid) async {
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('todos')
         .add({
           'name': name,
           'description': description,
           'date': date,
-          'isComplete': isComplete
+          'isComplete': isComplete,
+          'userId': uid
         })
         .then((value) => print("todo data added "))
         .catchError((error) => print("can not add"));
-    Get.back();
   }
 
-  Future<void> getData() async {
-    print("***************************************************");
-
+  Future<void> getData(String uid) async {
     try {
-      QuerySnapshot _taskSnap =
-          await FirebaseFirestore.instance.collection('todos').orderBy('name').get();
+      QuerySnapshot _taskSnap = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .collection('todos')
+          .get();
       print(_taskSnap.docs.length);
       tasks.clear();
 
@@ -67,17 +69,15 @@ class TodoController extends GetxController {
               name: item['name'],
               description: item['description'],
               date: item['date'],
-              isComplete: item['isComplete']),
+              isComplete: item['isComplete'],
+              userId: item['userId']),
         );
       }
       update();
     } catch (e) {
       Get.snackbar('Error', '${e.toString()}');
-      ;
+      print(e.toString());
     }
-    print("**************** tasks *************************");
-
-    print(tasks.length);
   }
 
   void removeTodo(String id) {
