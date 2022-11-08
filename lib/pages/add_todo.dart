@@ -22,6 +22,7 @@ class _AddTodoState extends State<AddTodo> {
     TextEditingController dateController = TextEditingController();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           "Todo App",

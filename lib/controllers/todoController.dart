@@ -46,7 +46,8 @@ class TodoController extends GetxController {
           'description': description,
           'date': date,
           'isComplete': isComplete,
-          'userId': uid
+          'userId': uid,
+          'dateCreated': Timestamp.now()
         })
         .then((value) => print("todo data added "))
         .catchError((error) => print("can not add"));
@@ -58,6 +59,7 @@ class TodoController extends GetxController {
           .collection('users')
           .doc(uid)
           .collection('todos')
+          .orderBy('dateCreated')
           .get();
       print(_taskSnap.docs.length);
       tasks.clear();
@@ -70,7 +72,8 @@ class TodoController extends GetxController {
               description: item['description'],
               date: item['date'],
               isComplete: item['isComplete'],
-              userId: item['userId']),
+              userId: item['userId'],
+              dateCreated: item['dateCreated']),
         );
       }
       update();
@@ -80,7 +83,12 @@ class TodoController extends GetxController {
     }
   }
 
-  void removeTodo(String id) {
-    FirebaseFirestore.instance.collection('todos').doc(id).delete();
+  void removeTodo(String id, String uid) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('todos')
+        .doc(id)
+        .delete();
   }
 }

@@ -1,4 +1,4 @@
-// ignore_for_file: unused_field, unnecessary_overrides, prefer_const_constructors, unused_element
+// ignore_for_file: unused_field, unnecessary_overrides, prefer_const_constructors, unused_element, file_names, avoid_print
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ import 'package:todo_app/pages/login.dart';
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
   late Rx<User?> _user;
-  
+
   FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
