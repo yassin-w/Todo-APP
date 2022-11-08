@@ -15,7 +15,6 @@ class SignUp extends StatelessWidget {
     TextEditingController passwordController = TextEditingController();
     return SafeArea(
       child: Scaffold(
-          body: Scaffold(
         body: Stack(
           children: [
             SizedBox(
@@ -239,7 +238,7 @@ class SignUp extends StatelessWidget {
             ),
           ],
         ),
-      )),
+      ),
     );
   }
 }

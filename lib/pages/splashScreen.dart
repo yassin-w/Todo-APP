@@ -1,19 +1,14 @@
-// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, camel_case_types, file_names
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, camel_case_types, file_names, prefer_interpolation_to_compose_strings, unused_field
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../auth/AuthenticationManager.dart';
-import 'OnBoard.dart';
+import 'package:todo_app/controllers/authController.dart';
 
 class SplashView extends StatelessWidget {
-  final AuthenticationManager _authmanager = Get.put(AuthenticationManager());
-
   Future<void> initializeSettings() async {
-    _authmanager.checkLoginStatus();
-
-    //Simulate other services for 3 seconds
-    await Future.delayed(Duration(seconds: 3));
+    await Firebase.initializeApp().then((value) => Get.put(AuthController()));
+    await Future.delayed(Duration(seconds: 10));
   }
 
   @override
@@ -21,15 +16,7 @@ class SplashView extends StatelessWidget {
     return FutureBuilder(
       future: initializeSettings(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return waitingView();
-        } else {
-          if (snapshot.hasError) {
-            return errorView(snapshot);
-          } else {
-            return OnBoard();
-          }
-        }
+        return waitingView();
       },
     );
   }

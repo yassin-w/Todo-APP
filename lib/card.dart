@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todo_app/controllers/authController.dart';
 import 'package:todo_app/pages/listtodos.dart';
 import 'controllers/todoController.dart';
 
@@ -55,7 +56,8 @@ class _CustomCardComp extends State<CustomCard> {
                   ),
                   IconButton(
                       onPressed: () {
-                        todoController.removeTodo(widget.id);
+                        todoController.removeTodo(widget.id,
+                            AuthController.instance.auth.currentUser!.uid);
                         Get.to(ListTodos());
                       },
                       icon: Icon(Icons.delete))
