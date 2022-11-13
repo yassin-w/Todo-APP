@@ -3,8 +3,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_app/pages/listtodos.dart';
 import 'package:todo_app/pages/login.dart';
+import 'package:todo_app/pages/home.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
@@ -25,7 +25,7 @@ class AuthController extends GetxController {
       print("login page");
       Get.offAll(() => Login());
     } else {
-      Get.offAll(() => ListTodos());
+      Get.offAll(() => HomePage());
     }
   }
 

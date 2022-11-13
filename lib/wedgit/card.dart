@@ -3,8 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/controllers/authController.dart';
+import 'package:todo_app/pages/home.dart';
 import 'package:todo_app/pages/listtodos.dart';
-import 'controllers/todoController.dart';
+import '../controllers/todoController.dart';
 
 class CustomCard extends StatefulWidget {
   String id;
@@ -34,7 +35,6 @@ class _CustomCardComp extends State<CustomCard> {
         borderRadius: BorderRadius.circular(20.0),
       ),
       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-      color: Color.fromARGB(179, 208, 194, 211),
       child: SizedBox(
         width: 350,
         height: 165,
@@ -47,18 +47,15 @@ class _CustomCardComp extends State<CustomCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "* ${widget.name} *",
-                    style: TextStyle(
-                        color: Colors.purple,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                    "${widget.name}",
+                    style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
                     textWidthBasis: TextWidthBasis.longestLine,
                   ),
                   IconButton(
                       onPressed: () {
                         todoController.removeTodo(widget.id,
                             AuthController.instance.auth.currentUser!.uid);
-                        Get.to(ListTodos());
+                        Get.to(HomePage());
                       },
                       icon: Icon(Icons.delete))
                 ],
@@ -70,10 +67,7 @@ class _CustomCardComp extends State<CustomCard> {
                 children: [
                   Text(
                     " ${widget.description}",
-                    style: TextStyle(
-                        color: Colors.indigo,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   )
                 ],
               ),
@@ -82,7 +76,7 @@ class _CustomCardComp extends State<CustomCard> {
                 children: [
                   Text("${widget.date}",
                       style: TextStyle(
-                          color: Colors.indigo,
+                          color: Color.fromARGB(255, 201, 201, 202),
                           fontSize: 14,
                           fontWeight: FontWeight.bold)),
                   Switch(
