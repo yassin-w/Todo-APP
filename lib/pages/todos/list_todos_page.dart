@@ -2,9 +2,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../wedgit/card.dart';
-import '../controllers/authController.dart';
-import '../controllers/todoController.dart';
+import '../../widget/cards/card.dart';
+import '../../controllers/auth_controller.dart';
+import '../../controllers/todo_controller.dart';
 import 'package:get/get.dart';
 
 class ListTodos extends StatefulWidget {
@@ -20,6 +20,7 @@ class _ListTodosState extends State<ListTodos> {
     final todoController = Get.put(TodoController());
     const moonIcon = CupertinoIcons.moon_stars;
     String filterValue = "filterValue";
+    String name = '';
     return GetBuilder<TodoController>(
         init: TodoController(),
         initState: (_) {},
@@ -40,17 +41,21 @@ class _ListTodosState extends State<ListTodos> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          width: 300,
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: TextField(
-                            decoration: InputDecoration(
+                            width: 300,
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: TextField(
+                              onChanged: (value) {
+                                setState(() {
+                                  name = value;
+                                });
+                              },
+                              decoration: InputDecoration(
                                 icon: Icon(
                                   Icons.search,
                                 ),
                                 hintText: "search :".tr,
-                                border: InputBorder.none),
-                          ),
-                        ),
+                              ),
+                            )),
                       ],
                     ),
                     const SizedBox(

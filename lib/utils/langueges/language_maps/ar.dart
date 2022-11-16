@@ -4,7 +4,7 @@ const Map<String, String> ar = {
   'login': 'تسجيل دخول',
   'Sign up': 'تسجيل حساب جديد',
   'sign up': 'تسجيل حساب جديد',
-  'Your Email :': ': بريدك الالكتروني',
+  'Your Email :': ' بريدك الالكتروني:',
   'Password :': 'كلمة السر: ',
   "Don't have an accout?": ' ليس لديك حساب؟ ',
   'Already have an account? ': 'هل لديك حساب؟',
@@ -17,5 +17,6 @@ const Map<String, String> ar = {
   'search :': 'بحث:',
   'Filter': 'فلتر:',
   'choose language: ': 'أختر اللغة: ',
-  'Dark theme': 'النمط الداكن: '
+  'Dark theme': 'النمط الداكن: ',
+  'tasks done': 'المهام المنجزة'
 };

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:todo_app/utils/langueges/ar.dart';
-import 'package:todo_app/utils/langueges/en.dart';
+import 'package:todo_app/utils/langueges/language_maps/ar.dart';
+import 'package:todo_app/utils/langueges/language_maps/en.dart';
 
 class Translation extends Translations {
   @override

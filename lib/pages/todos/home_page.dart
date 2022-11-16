@@ -1,24 +1,22 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_app/pages/add_todo.dart';
-import 'package:todo_app/pages/listtodos.dart';
-
-import '../controllers/authController.dart';
-import '../wedgit/drawer.dart';
+import 'package:todo_app/pages/todos/add_todo_page.dart';
+import 'package:todo_app/pages/todos/is_complete_tasks_page.dart';
+import 'package:todo_app/pages/todos/list_todos_page.dart';
+import '../../controllers/auth_controller.dart';
+import '../../widget/components/drawer.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _NavState createState() => _NavState();
 }
 
 class _NavState extends State<HomePage> {
   int _selectedIndex = 0;
-  final List<Widget> _widgetOptions = [
-    ListTodos(),
-    AddTodo(),
-  ];
+  final List<Widget> _widgetOptions = [ListTodos(), AddTodo(), CompleteTodos()];
 
   void _onItemTap(int index) {
     setState(() {
@@ -30,7 +28,7 @@ class _NavState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: Drawer(
-        child: drawer(),
+        child: DrawerComp(),
       ),
       appBar: AppBar(
         title: Text(
@@ -60,6 +58,11 @@ class _NavState extends State<HomePage> {
                 Icons.add_task,
               ),
               label: 'add task'.tr),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.done,
+              ),
+              label: 'tasks done'.tr),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTap,

@@ -2,7 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ToDo {
+class Todo {
   String id;
   String name;
   String description;
@@ -19,7 +19,7 @@ class ToDo {
   //     required this.isComplete,
   //     required this.userId});
 
-  ToDo(
+  Todo(
       {required this.id,
       required this.name,
       required this.description,
@@ -27,4 +27,6 @@ class ToDo {
       required this.dateCreated,
       required this.isComplete,
       required this.userId});
+
+  static fromMap(QueryDocumentSnapshot<Map<String, dynamic>> item) {}
 }

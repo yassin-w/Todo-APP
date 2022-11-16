@@ -1,27 +1,21 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:todo_app/controllers/authController.dart';
-import 'package:todo_app/pages/login.dart';
-
-import '../utils/themes/theme_service.dart';
-import '../wedgit/drawer.dart';
+import 'package:todo_app/pages/authentication/login_page.dart';
+import '../../widget/components/drawer.dart';
+import '../../widget/forms/signup_form.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-
     return SafeArea(
       child: Scaffold(
         drawer: Drawer(
-          child: drawer(),
+          child: DrawerComp(),
         ),
         appBar: AppBar(
           title: Text(
@@ -55,79 +49,9 @@ class SignUp extends StatelessWidget {
                 height: 120,
               ),
               const SizedBox(
-                height: 27,
+                height: 40,
               ),
-              const SizedBox(
-                height: 15,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(66),
-                  border: Border.all(
-                    color: Color.fromARGB(255, 158, 152, 235),
-                  ),
-                ),
-                width: 266,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                      icon: Icon(
-                        Icons.email,
-                      ),
-                      hintText: "Your Email :".tr,
-                      border: InputBorder.none),
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Color.fromARGB(255, 158, 152, 235),
-                  ),
-                  borderRadius: BorderRadius.circular(66),
-                ),
-                width: 266,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: TextField(
-                  controller: passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      suffix: Icon(
-                        Icons.visibility,
-                      ),
-                      icon: Icon(
-                        Icons.lock,
-                        size: 19,
-                      ),
-                      hintText: "Password :".tr,
-                      border: InputBorder.none),
-                ),
-              ),
-              const SizedBox(
-                height: 17,
-              ),
-              const SizedBox(
-                height: 17,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  AuthController.instance.register(emailController.text.trim(),
-                      passwordController.text.trim());
-                },
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(horizontal: 89, vertical: 5)),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(27))),
-                ),
-                child: Text(
-                  "sign up".tr,
-                  style: TextStyle(fontSize: 24),
-                ),
-              ),
+              SignupForm(),
               const SizedBox(
                 height: 25,
               ),

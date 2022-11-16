@@ -44,7 +44,9 @@ dependencies:
   firebase_auth: ^4.1.1
   get_storage: ^2.0.3
   shared_preferences: any
-
+  intl: ^0.17.0
+  flutter_datetime_picker: ^1.5.1
+  searchable_listview: ^2.1.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

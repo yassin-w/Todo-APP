@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:todo_app/pages/splashScreen.dart';
+import 'package:todo_app/pages/mainPages/splash_screen.dart';
 import 'package:todo_app/utils/langueges/translation.dart';
 import 'package:todo_app/utils/themes/theme_service.dart';
 
@@ -19,12 +19,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      // localaization
       translations: Translation(),
-      locale: Locale(GetStorage().read('lang')),
-      fallbackLocale: Locale(GetStorage().read('lang')),
+      locale: Locale(GetStorage().read('lang') ?? 'en'),
+      fallbackLocale: Locale(GetStorage().read('lang') ?? 'en'),
+      // themes
       theme: ThemeService().lightTheme,
       darkTheme: ThemeService().darkTheme,
       themeMode: ThemeService().getThemeMode(),
+
       debugShowCheckedModeBanner: false,
       home: SplashView(),
     );

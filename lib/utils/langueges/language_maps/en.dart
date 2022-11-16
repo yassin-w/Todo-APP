@@ -17,5 +17,6 @@ const Map<String, String> en = {
   'search :': 'search :',
   'filter': 'Filter',
   'choose language: ': 'choose language: ',
-  'Dark theme': 'Dark theme'
+  'Dark theme': 'Dark theme',
+  'tasks done': 'tasks done'
 };

@@ -3,7 +3,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_app/controllers/authController.dart';
+import 'package:todo_app/controllers/auth_controller.dart';
 
 class SplashView extends StatelessWidget {
   Future<void> initializeSettings() async {

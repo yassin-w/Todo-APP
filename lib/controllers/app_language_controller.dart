@@ -1,7 +1,8 @@
+// ignore_for_file: unnecessary_null_comparison, prefer_if_null_operators
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-
-import '../utils/langueges/local_storge.dart';
+import '../utils/langueges/language_storge.dart';
 
 class AppLanguage extends GetxController {
   var appLocale = 'ar';
@@ -9,15 +10,17 @@ class AppLanguage extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    LocalStorage localStorage = LocalStorage();
+    LanguageStorage localStorage = LanguageStorage();
 
-    appLocale = await localStorage.languageSelected;
+    appLocale = await localStorage.languageSelected == null
+        ? 'ar'
+        : await localStorage.languageSelected;
     update();
     Get.updateLocale(Locale(appLocale));
   }
 
   void changeLanguage(String type) async {
-    LocalStorage localStorage = LocalStorage();
+    LanguageStorage localStorage = LanguageStorage();
 
     if (appLocale == type) {
       return;

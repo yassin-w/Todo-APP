@@ -1,34 +1,34 @@
-// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, prefer_const_literals_to_create_immutables, no_leading_underscores_for_local_identifiers
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/AppLanguage.dart';
-import '../utils/themes/theme_service.dart';
+import '../../controllers/app_language_controller.dart';
+import '../../utils/themes/theme_service.dart';
 
-class drawer extends StatefulWidget {
-  const drawer({
+class DrawerComp extends StatefulWidget {
+  const DrawerComp({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<drawer> createState() => _drawerState();
+  State<DrawerComp> createState() => DrawerState();
 }
 
-class _drawerState extends State<drawer> {
+class DrawerState extends State<DrawerComp> {
   @override
   Widget build(BuildContext context) {
-    String _selectedLang = 'en';
+    String selectedLang = 'ar';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         DrawerHeader(
           child: Column(
             children: [
-              Container(
+              SizedBox(
                 // ignore: sort_child_properties_last
-                child: Text(
+                child: const Text(
                   "Todo App",
                   style: TextStyle(fontFamily: "myfont", fontSize: 22),
                   textAlign: TextAlign.center,
@@ -67,9 +67,9 @@ class _drawerState extends State<drawer> {
                         value: controller.appLocale,
                         onChanged: (value) {
                           setState(() {
-                            _selectedLang = value!;
+                            selectedLang = value!;
                           });
-                          Get.updateLocale(Locale(_selectedLang));
+                          Get.updateLocale(Locale(selectedLang));
                           controller.changeLanguage(value!);
                         });
                   })

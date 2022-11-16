@@ -1,10 +1,9 @@
-// ignore_for_file: unused_field, unnecessary_overrides, prefer_const_constructors, unused_element, file_names, avoid_print
-
+// ignore_for_file: unused_field, unnecessary_overrides, prefer_const_constructors, unused_element, file_names, avoid_print, unnecessary_null_comparison
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:todo_app/pages/login.dart';
-import 'package:todo_app/pages/home.dart';
+import 'package:todo_app/pages/authentication/login_page.dart';
+import 'package:todo_app/pages/todos/home_page.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
@@ -29,37 +28,55 @@ class AuthController extends GetxController {
     }
   }
 
-  void register(String email, String password) {
+  void register(String email, String password) async {
     try {
-      auth.createUserWithEmailAndPassword(email: email, password: password);
-    } catch (e) {
+      await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      String error = '';
+      if (e.code == 'email-already-in-use') {
+        error = 'The account already exists for that email.';
+      } else {
+        error = e.message!;
+      }
       Get.snackbar("about user ", "message",
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
           titleText: Text(
             "Account creation faild",
             style: TextStyle(color: Colors.white),
           ),
           messageText: Text(
-            e.toString(),
+            error,
             style: TextStyle(color: Colors.white),
           ));
     }
   }
 
-  void login(String email, String password) {
+  void login(String email, String password) async {
     try {
-      auth.signInWithEmailAndPassword(email: email, password: password);
-    } catch (e) {
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      String error = '';
+      if (e.code == 'user-not-found') {
+        error = 'No user found for that email.';
+      } else if (e.code == 'wrong-password') {
+        error = 'Wrong password provided for that user.';
+      } else if (e.code == 'network-request-failed') {
+        error = 'check your internet connection.';
+      } else {
+        error = e.message!;
+      }
+
       Get.snackbar("about login ", "message",
           backgroundColor: Colors.redAccent,
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
           titleText: Text(
             "login faild",
             style: TextStyle(color: Colors.white),
           ),
           messageText: Text(
-            e.toString(),
+            error,
             style: TextStyle(color: Colors.white),
           ));
     }
