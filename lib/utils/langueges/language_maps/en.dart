@@ -1,0 +1,22 @@
+const Map<String, String> en = {
+  'Log in': 'Log in',
+  'Login': 'Login',
+  'login': 'login',
+  'sign up': 'sign up',
+  'Sign up': 'sign up',
+  'Your Email :': 'Your Email :',
+  'Password :': 'Password :',
+  "Don't have an accout?": 'Dont have an accout?',
+  'Already have an account? ': 'already have an account? ',
+  'ToDo Name': 'Todo Name',
+  'Todo Description': 'todo description',
+  'Date': 'date',
+  'Add': 'add',
+  'add task': 'add task',
+  'Home': 'home',
+  'search :': 'search :',
+  'filter': 'Filter',
+  'choose language: ': 'choose language: ',
+  'Dark theme': 'Dark theme',
+  'tasks done': 'tasks done'
+};

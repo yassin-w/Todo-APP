@@ -1,0 +1,22 @@
+const Map<String, String> ar = {
+  'Log in': 'تسجيل دخول',
+  'Login': 'تسجيل دخول',
+  'login': 'تسجيل دخول',
+  'Sign up': 'تسجيل حساب جديد',
+  'sign up': 'تسجيل حساب جديد',
+  'Your Email :': ' بريدك الالكتروني:',
+  'Password :': 'كلمة السر: ',
+  "Don't have an accout?": ' ليس لديك حساب؟ ',
+  'Already have an account? ': 'هل لديك حساب؟',
+  'ToDo Name': ' اسم المهمة:',
+  'Todo Description': 'وصف المهمة:',
+  'Date': 'تاريخ المهمة: ',
+  'Add': 'اضافة',
+  'add task': 'اضافة مهمة ',
+  'Home': 'الصفحة الرئيسية ',
+  'search :': 'بحث:',
+  'Filter': 'فلتر:',
+  'choose language: ': 'أختر اللغة: ',
+  'Dark theme': 'النمط الداكن: ',
+  'tasks done': 'المهام المنجزة'
+};
