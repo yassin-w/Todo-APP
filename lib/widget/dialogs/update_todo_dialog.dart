@@ -32,137 +32,140 @@ class UpdateTodoDialog extends StatelessWidget {
     DateTime date = DateFormat.yMMMd().parse(widget.date);
     TextEditingController dateController =
         TextEditingController(text: widget.date);
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(40),
-      ),
-      child: AlertDialog(
-        actions: [
-          ElevatedButton(
-            child: Text("Cancel"),
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => HomePage()));
-            },
-          ),
-        ],
-        title: Column(
-          children: [
-            SvgPicture.asset(
-              "assets/icons/update.svg",
-              height: 50,
-              color: Color.fromARGB(255, 9, 207, 59),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text('todo information')
-          ],
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(40),
         ),
-        content: SizedBox(
-          height: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        child: AlertDialog(
+          actions: [
+            ElevatedButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => HomePage()));
+              },
+            ),
+          ],
+          title: Column(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(66),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 129, 128, 145),
-                    )),
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: TextField(
-                  controller: nameController,
-                  decoration: InputDecoration(
-                      hintText: "ToDo Name".tr, border: InputBorder.none),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(66),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 129, 128, 145),
-                    )),
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: TextField(
-                  controller: descriptionController,
-                  decoration: InputDecoration(
-                      hintText: "Todo Description".tr,
-                      hintStyle: TextStyle(),
-                      border: InputBorder.none),
-                ),
+              SvgPicture.asset(
+                "assets/icons/update.svg",
+                height: 40,
+                color: Color.fromARGB(255, 9, 207, 59),
               ),
               SizedBox(
                 height: 10,
               ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(66),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 158, 152, 235),
-                    )),
-                width: 250,
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: TextFormField(
-                  readOnly: true,
-                  controller: dateController,
-                  decoration: InputDecoration(
-                      hintText: "todo date".tr,
-                      hintStyle: TextStyle(),
-                      border: InputBorder.none),
-                  onTap: () {
-                    DatePicker.showDatePicker(context,
-                        showTitleActions: true,
-                        minTime: DateTime(2022),
-                        maxTime: DateTime(2030), onChanged: (value) {
-                      date = value;
-                      dateController.text = DateFormat.yMMMd().format(value);
-                    }, onConfirm: (value) {
-                      date = value;
-                      dateController.text = DateFormat.yMMMd().format(value);
-                    }, currentTime: date, locale: LocaleType.en);
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return UpdateSuccessDialog();
-                      });
-
-                  todoController.UpdateTodo(
-                      nameController.text.trim(),
-                      descriptionController.text.trim(),
-                      DateFormat.yMMMd().format(date),
-                      false,
-                      AuthController.instance.auth.currentUser!.uid,
-                      widget.id);
-                  await Future.delayed(Duration(seconds: 2));
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
-                },
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(
-                      EdgeInsets.symmetric(horizontal: 50, vertical: 10)),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(27))),
-                ),
-                child: Text(
-                  "update".tr,
-                  style: TextStyle(
-                    fontSize: 20,
+              Text('todo information')
+            ],
+          ),
+          content: SizedBox(
+            height: 250,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(66),
+                      border: Border.all(
+                        color: Color.fromARGB(255, 129, 128, 145),
+                      )),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: TextField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                        hintText: "ToDo Name".tr, border: InputBorder.none),
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(66),
+                      border: Border.all(
+                        color: Color.fromARGB(255, 129, 128, 145),
+                      )),
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: TextField(
+                    controller: descriptionController,
+                    decoration: InputDecoration(
+                        hintText: "Todo Description".tr,
+                        hintStyle: TextStyle(),
+                        border: InputBorder.none),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(66),
+                      border: Border.all(
+                        color: Color.fromARGB(255, 158, 152, 235),
+                      )),
+                  width: 250,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: TextFormField(
+                    readOnly: true,
+                    controller: dateController,
+                    decoration: InputDecoration(
+                        hintText: "todo date".tr,
+                        hintStyle: TextStyle(),
+                        border: InputBorder.none),
+                    onTap: () {
+                      DatePicker.showDatePicker(context,
+                          showTitleActions: true,
+                          minTime: DateTime(2022),
+                          maxTime: DateTime(2030), onChanged: (value) {
+                        date = value;
+                        dateController.text = DateFormat.yMMMd().format(value);
+                      }, onConfirm: (value) {
+                        date = value;
+                        dateController.text = DateFormat.yMMMd().format(value);
+                      }, currentTime: date, locale: LocaleType.en);
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return UpdateSuccessDialog();
+                        });
+
+                    todoController.UpdateTodo(
+                        nameController.text.trim(),
+                        descriptionController.text.trim(),
+                        DateFormat.yMMMd().format(date),
+                        false,
+                        AuthController.instance.auth.currentUser!.uid,
+                        widget.id);
+                    await Future.delayed(Duration(seconds: 2));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => HomePage()));
+                  },
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(horizontal: 50, vertical: 10)),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(27))),
+                  ),
+                  child: Text(
+                    "update".tr,
+                    style: TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

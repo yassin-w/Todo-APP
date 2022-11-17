@@ -14,6 +14,8 @@ class SignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
+
         drawer: Drawer(
           child: DrawerComp(),
         ),
@@ -46,14 +48,14 @@ class SignUp extends StatelessWidget {
               ),
               SvgPicture.asset(
                 "assets/icons/signup.svg",
-                height: 120,
+                height: 100,
               ),
               const SizedBox(
-                height: 40,
+                height: 30,
               ),
               SignupForm(),
               const SizedBox(
-                height: 25,
+                height: 15,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

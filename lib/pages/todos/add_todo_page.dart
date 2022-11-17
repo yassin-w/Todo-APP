@@ -13,8 +13,9 @@ class _AddTodoState extends State<AddTodo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 60),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         width: double.infinity,
         child: AddTodoForm(),
       ),

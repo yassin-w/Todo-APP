@@ -30,113 +30,109 @@ class AddTodoForm extends StatelessWidget {
     return Form(
       key: formKey,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(66),
-                    border: Border.all(
-                      color: const Color.fromARGB(255, 158, 152, 235),
-                    )),
-                width: 250,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: TextFormField(
-                  validator: Validators.validateSimpleString,
-                  controller: nameController,
-                  decoration: InputDecoration(
-                      hintText: "ToDo Name".tr, border: InputBorder.none),
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(66),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 158, 152, 235),
-                    )),
-                width: 250,
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: TextField(
-                  controller: descriptionController,
-                  decoration: InputDecoration(
-                      hintText: "Todo Description".tr,
-                      hintStyle: TextStyle(),
-                      border: InputBorder.none),
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(66),
-                    border: Border.all(
-                      color: Color.fromARGB(255, 158, 152, 235),
-                    )),
-                width: 250,
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: TextFormField(
-                  readOnly: true,
-                  controller: dateController,
-                  decoration: InputDecoration(
-                      hintText: "todo date".tr,
-                      hintStyle: TextStyle(),
-                      border: InputBorder.none),
-                  onTap: () {
-                    DatePicker.showDatePicker(context,
-                        showTitleActions: true,
-                        minTime: DateTime(2022),
-                        maxTime: DateTime(2030), onChanged: (value) {
-                      date = value;
-                      dateController.text = DateFormat.yMMMd().format(value);
-                    }, onConfirm: (value) {
-                      date = value;
-                      dateController.text = DateFormat.yMMMd().format(value);
-                    }, currentTime: date, locale: LocaleType.en);
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  if (formKey.currentState!.validate()) {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AddSuccessfullyTodo();
-                        });
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(66),
+                border: Border.all(
+                  color: const Color.fromARGB(255, 158, 152, 235),
+                )),
+            width: 250,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: TextFormField(
+              validator: Validators.validateSimpleString,
+              controller: nameController,
+              decoration: InputDecoration(
+                  hintText: "ToDo Name".tr, border: InputBorder.none),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(66),
+                border: Border.all(
+                  color: Color.fromARGB(255, 158, 152, 235),
+                )),
+            width: 250,
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: TextField(
+              controller: descriptionController,
+              decoration: InputDecoration(
+                  hintText: "Todo Description".tr,
+                  hintStyle: TextStyle(),
+                  border: InputBorder.none),
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(66),
+                border: Border.all(
+                  color: Color.fromARGB(255, 158, 152, 235),
+                )),
+            width: 250,
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: TextFormField(
+              readOnly: true,
+              controller: dateController,
+              decoration: InputDecoration(
+                  hintText: "todo date".tr,
+                  hintStyle: TextStyle(),
+                  border: InputBorder.none),
+              onTap: () {
+                DatePicker.showDatePicker(context,
+                    showTitleActions: true,
+                    minTime: DateTime(2022),
+                    maxTime: DateTime(2030), onChanged: (value) {
+                  date = value;
+                  dateController.text = DateFormat.yMMMd().format(value);
+                }, onConfirm: (value) {
+                  date = value;
+                  dateController.text = DateFormat.yMMMd().format(value);
+                }, currentTime: date, locale: LocaleType.en);
+              },
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              if (formKey.currentState!.validate()) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AddSuccessfullyTodo();
+                    });
 
-                    todoController.addTodo(
-                        nameController.text.trim(),
-                        descriptionController.text.trim(),
-                        dateController.text.trim(),
-                        false,
-                        AuthController.instance.auth.currentUser!.uid);
-                    await Future.delayed(Duration(seconds: 2));
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
-                  }
-                },
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(
-                      EdgeInsets.symmetric(horizontal: 50, vertical: 10)),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(27))),
-                ),
-                child: Text(
-                  "Add".tr,
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
+                todoController.addTodo(
+                    nameController.text.trim(),
+                    descriptionController.text.trim(),
+                    DateFormat.yMMMd().format(date),
+                    false,
+                    AuthController.instance.auth.currentUser!.uid);
+                await Future.delayed(Duration(seconds: 2));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomePage()));
+              }
+            },
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all(
+                  EdgeInsets.symmetric(horizontal: 50, vertical: 10)),
+              shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(27))),
+            ),
+            child: Text(
+              "Add".tr,
+              style: TextStyle(
+                fontSize: 20,
               ),
-            ],
+            ),
           ),
         ],
       ),
