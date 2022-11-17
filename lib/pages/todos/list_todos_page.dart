@@ -1,7 +1,7 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable, no_leading_underscores_for_local_identifiers, unused_element, prefer_const_constructors_in_immutables, avoid_unnecessary_containers
+// ignore_for_file: prefer_const_constructors, unused_local_variable, no_leading_underscores_for_local_identifiers, unused_element, prefer_const_constructors_in_immutables, avoid_unnecessary_containers, non_constant_identifier_names
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../models/todo_model.dart';
 import '../../widget/cards/card.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/todo_controller.dart';
@@ -15,18 +15,29 @@ class ListTodos extends StatefulWidget {
 }
 
 class _ListTodosState extends State<ListTodos> {
+  List<Todo> todos = [];
+  List<Todo> finalRes = [];
+  final controller = TextEditingController();
+  final todoController = Get.put(TodoController());
+
+  @override
+  void initState() {
+    TodoController();
+    todoController.getData(AuthController.instance.auth.currentUser!.uid);
+    todos = todoController.todos;
+    print("_________________________________________");
+    print(todos.length);
+    finalRes = todos;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final todoController = Get.put(TodoController());
-    const moonIcon = CupertinoIcons.moon_stars;
-    String filterValue = "filterValue";
-    String name = '';
     return GetBuilder<TodoController>(
         init: TodoController(),
         initState: (_) {},
         builder: (todoController) {
-          todoController.getData(AuthController.instance.auth.currentUser!.uid);
-
+          ///  todos = todoController.todos;
           return Scaffold(
             body: Center(
               child: Container(
@@ -44,11 +55,8 @@ class _ListTodosState extends State<ListTodos> {
                             width: 300,
                             padding: EdgeInsets.symmetric(horizontal: 16),
                             child: TextField(
-                              onChanged: (value) {
-                                setState(() {
-                                  name = value;
-                                });
-                              },
+                              controller: controller,
+                              onChanged: _SearchTodo,
                               decoration: InputDecoration(
                                 icon: Icon(
                                   Icons.search,
@@ -62,22 +70,17 @@ class _ListTodosState extends State<ListTodos> {
                       height: 15,
                     ),
                     Expanded(
-                      child: GetX<TodoController>(
-                        builder: (controller) {
-                          return ListView.builder(
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemCount: controller.tasks.length,
-                              itemBuilder: (context, index) {
-                                return CustomCard(
-                                    id: controller.tasks[index].id,
-                                    name: controller.tasks[index].name,
-                                    description:
-                                        controller.tasks[index].description,
-                                    date: controller.tasks[index].date,
-                                    isComplete:
-                                        controller.tasks[index].isComplete);
-                              });
+                      child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: finalRes.length,
+                        itemBuilder: (context, index) {
+                          return CustomCard(
+                              id: finalRes[index].id,
+                              name: finalRes[index].name,
+                              description: finalRes[index].description,
+                              date: finalRes[index].date,
+                              isComplete: finalRes[index].isComplete);
                         },
                       ),
                     )
@@ -87,5 +90,22 @@ class _ListTodosState extends State<ListTodos> {
             ),
           );
         });
+  }
+
+  void _SearchTodo(String todoName) {
+    List<Todo> result = [];
+    if (todoName == '') {
+      result = todos;
+    } else {
+      result = todos.where((todo) {
+        final todoName = todo.name.toLowerCase();
+        final input = todoName.toLowerCase();
+        return todoName.contains(input);
+      }).toList();
+    }
+
+    setState(() {
+      finalRes = result;
+    });
   }
 }
