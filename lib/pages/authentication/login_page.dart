@@ -20,7 +20,8 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        drawer: Drawer(
+          resizeToAvoidBottomInset: false,
+          drawer: Drawer(
           child: DrawerComp(),
         ),
         appBar: AppBar(
@@ -33,7 +34,7 @@ class _LoginState extends State<Login> {
           centerTitle: true,
         ),
         body: SizedBox(
-          height: double.infinity,
+
           width: double.infinity,
           child: SizedBox(
             width: double.infinity,
@@ -41,14 +42,14 @@ class _LoginState extends State<Login> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 35,
+                  height: 20,
                 ),
                 Text(
                   "Log in".tr,
                   style: TextStyle(fontSize: 33, fontFamily: "myfont"),
                 ),
                 const SizedBox(
-                  height: 35,
+                  height: 20,
                 ),
                 SvgPicture.asset(
                   "assets/icons/login.svg",
@@ -56,7 +57,7 @@ class _LoginState extends State<Login> {
                   height: 100,
                 ),
                 const SizedBox(
-                  height: 35,
+                  height: 20,
                 ),
                 LoginForm(),
                 const SizedBox(

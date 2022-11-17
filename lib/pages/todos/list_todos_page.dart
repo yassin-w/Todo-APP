@@ -92,14 +92,14 @@ class _ListTodosState extends State<ListTodos> {
         });
   }
 
-  void _SearchTodo(String todoName) {
+  void _SearchTodo(String query) {
     List<Todo> result = [];
-    if (todoName == '') {
+    if (query == '') {
       result = todos;
     } else {
       result = todos.where((todo) {
         final todoName = todo.name.toLowerCase();
-        final input = todoName.toLowerCase();
+        final input = query.toLowerCase();
         return todoName.contains(input);
       }).toList();
     }
