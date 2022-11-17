@@ -16,6 +16,7 @@ class TodoController extends GetxController {
   @override
   void onInit() async {
     getData(uid);
+
     super.onInit();
   }
 
