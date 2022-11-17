@@ -28,5 +28,15 @@ class Todo {
       required this.isComplete,
       required this.userId});
 
-  static fromMap(QueryDocumentSnapshot<Map<String, dynamic>> item) {}
+  Map<String, dynamic> toMap() {
+    return {
+      'id': this.id,
+      'name': this.name,
+      'description': this.description,
+      'date': this.date,
+      'dateCreated': this.dateCreated,
+      'isComplete': this.isComplete,
+      'userId': this.userId,
+    };
+  }
 }
