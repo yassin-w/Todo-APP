@@ -25,8 +25,6 @@ class _ListTodosState extends State<ListTodos> {
     TodoController();
     todoController.getData(AuthController.instance.auth.currentUser!.uid);
     todos = todoController.todos;
-    print("_________________________________________");
-    print(todos.length);
     finalRes = todos;
     super.initState();
   }

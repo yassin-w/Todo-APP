@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/widget/dialogs/success_update_todo_dialog.dart';
