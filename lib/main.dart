@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:todo_app/pages/mainPages/splash_screen.dart';
-import 'package:todo_app/utils/langueges/translation.dart';
+import 'package:todo_app/utils/languages/translation.dart';
 import 'package:todo_app/utils/themes/theme_service.dart';
 
 Future<void> main() async {
