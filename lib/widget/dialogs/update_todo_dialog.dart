@@ -40,7 +40,7 @@ class UpdateTodoDialog extends StatelessWidget {
         child: AlertDialog(
           actions: [
             ElevatedButton(
-              child: Text("Cancel"),
+              child: Text("Cancel".tr),
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => HomePage()));
@@ -73,7 +73,7 @@ class UpdateTodoDialog extends StatelessWidget {
               ),
             ),
           ],
-          title: Text('todo information'),
+          title: Text('todo information'.tr),
           content: SingleChildScrollView(
             child: SizedBox(
               child: Column(

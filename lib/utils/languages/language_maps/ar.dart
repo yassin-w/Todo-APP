@@ -10,7 +10,7 @@ const Map<String, String> ar = {
   'Already have an account? ': 'هل لديك حساب؟',
   'ToDo Name': ' اسم المهمة:',
   'Todo Description': 'وصف المهمة:',
-  'Date': 'تاريخ المهمة: ',
+  'todo date': 'تاريخ المهمة: ',
   'Add': 'اضافة',
   'add task': 'اضافة مهمة ',
   'Home': 'الصفحة الرئيسية ',
@@ -18,5 +18,18 @@ const Map<String, String> ar = {
   'Filter': 'فلتر:',
   'choose language: ': 'أختر اللغة: ',
   'Dark theme': 'النمط الداكن: ',
-  'tasks done': 'المهام المنجزة'
+  'tasks done': 'المهام المنجزة',
+  'add location': 'اضافة موقع',
+  'Locations': 'مواقع المهام',
+  'Save': 'حفظ',
+  'Cancel': 'الغاء',
+  'delete': 'حذف',
+  'Are you sure?': 'هل انت واثق!',
+  'Do you really want to delete these records? This process cannot be undone.':
+      'هل تريد حقًا حذف هذه المهمة؟ لا يمكن التراجع عن هذه العملية.',
+  'Add Successfully': 'تمت اضافة المهمة بنجاح',
+  'Done': 'جاهز',
+  'update Successfully': 'تم تحديث المهمة بنجاح',
+  'update': 'تحديث',
+  'todo information': 'معلومات المهمة'
 };

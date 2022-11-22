@@ -10,6 +10,8 @@ class Todo {
   Timestamp dateCreated;
   bool isComplete;
   String userId;
+  double lat;
+  double long;
 
   // ToDo(
   //     {required this.id,
@@ -26,7 +28,9 @@ class Todo {
       required this.date,
       required this.dateCreated,
       required this.isComplete,
-      required this.userId});
+      required this.userId,
+      required this.lat,
+      required this.long});
 
   Map<String, dynamic> toMap() {
     return {
@@ -37,6 +41,8 @@ class Todo {
       'dateCreated': this.dateCreated,
       'isComplete': this.isComplete,
       'userId': this.userId,
+      'lat': this.lat,
+      'long': this.long,
     };
   }
 }

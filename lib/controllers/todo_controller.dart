@@ -1,9 +1,7 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, deprecated_member_use, prefer_collection_literals, no_leading_underscores_for_local_identifiers, avoid_print, unnecessary_overrides, unnecessary_string_interpolations, file_names, library_prefixes
 import 'dart:core';
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
 import 'package:firebase_storage/firebase_storage.dart' as Firebase_Storage;
 
 import 'package:get/get.dart';
@@ -16,6 +14,7 @@ class TodoController extends GetxController {
   String uid = AuthController.instance.auth.currentUser!.uid;
   RxList tasksByName = [].obs;
   RxList complete_tasks = [].obs;
+
   final Firebase_Storage.FirebaseStorage storage =
       Firebase_Storage.FirebaseStorage.instance;
   @override
@@ -25,8 +24,15 @@ class TodoController extends GetxController {
     super.onInit();
   }
 
-  Future<void> addTodo(String name, String description, String date,
-      bool isComplete, String image, String uid) async {
+  Future<void> addTodo(
+      String name,
+      String description,
+      String date,
+      bool isComplete,
+      String image,
+      String uid,
+      double lat,
+      double long) async {
     return FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
@@ -38,7 +44,9 @@ class TodoController extends GetxController {
           'isComplete': isComplete,
           'userId': uid,
           'dateCreated': Timestamp.now(),
-          'image': image
+          'image': image,
+          'latitude': lat,
+          'longitude': long
         })
         .then((value) => print("todo data added "))
         .catchError((error) => print("can not add"));
@@ -64,7 +72,9 @@ class TodoController extends GetxController {
               date: item['date'],
               isComplete: item['isComplete'],
               userId: item['userId'],
-              dateCreated: item['dateCreated']),
+              dateCreated: item['dateCreated'],
+              lat: item['latitude'],
+              long: item['longitude']),
         );
       }
       update();
@@ -96,7 +106,9 @@ class TodoController extends GetxController {
               date: item['date'],
               isComplete: item['isComplete'],
               userId: item['userId'],
-              dateCreated: item['dateCreated']),
+              dateCreated: item['dateCreated'],
+              lat: item['latitude'],
+              long: item['longitude']),
         );
       }
       update();
@@ -141,15 +153,5 @@ class TodoController extends GetxController {
         })
         .then((value) => print("todo data UPDATED "))
         .catchError((error) => print("can not UPDATED"));
-  }
-
-  Future<void> upload_file(String filePath, String fileName) async {
-    File file = File(filePath);
-
-    try {
-      await storage.ref('images/$fileName').putFile(file);
-    } on firebase_core.FirebaseException catch (e) {
-      print(e);
-    }
   }
 }

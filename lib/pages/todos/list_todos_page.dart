@@ -35,7 +35,7 @@ class _ListTodosState extends State<ListTodos> {
         init: TodoController(),
         initState: (_) {},
         builder: (todoController) {
-          ///  todos = todoController.todos;
+          todoController.getData(AuthController.instance.auth.currentUser!.uid);
           return Scaffold(
             body: Center(
               child: Container(

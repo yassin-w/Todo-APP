@@ -29,7 +29,6 @@ class _CustomCardComp extends State<CustomCard> {
   @override
   Widget build(BuildContext context) {
     TodoController todoController = Get.find();
-
     return GestureDetector(
       onTap: () {
         showDialog(
@@ -46,7 +45,7 @@ class _CustomCardComp extends State<CustomCard> {
         margin: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
         child: SizedBox(
           width: 350,
-          height: 165,
+          height: 170,
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 class UpdateSuccessDialog extends StatelessWidget {
   const UpdateSuccessDialog({
@@ -16,15 +17,15 @@ class UpdateSuccessDialog extends StatelessWidget {
       ),
       child: AlertDialog(
         title: Text(
-          'Done',
+          'Done'.tr,
           style: TextStyle(fontSize: 25),
         ),
         content: SizedBox(
           height: 150,
           child: Column(
             children: [
-              const Text(
-                'update Successfully',
+              Text(
+                'update Successfully'.tr,
               ),
               const SizedBox(
                 height: 20,
