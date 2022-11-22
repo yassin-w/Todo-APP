@@ -19,6 +19,7 @@ class AuthController extends GetxController {
     ever(_user, _intialScreen);
   }
 
+  //* *********** check login status called in splash screen ********/
   _intialScreen(User? user) {
     if (user == null) {
       print("login page");

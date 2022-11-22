@@ -15,7 +15,6 @@ class SignUp extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-
         drawer: Drawer(
           child: DrawerComp(),
         ),

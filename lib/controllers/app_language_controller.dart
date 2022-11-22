@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import '../utils/langueges/language_storge.dart';
+import '../utils/languages/language_storge.dart';
 
 class AppLanguage extends GetxController {
   var appLocale = 'ar';
@@ -11,7 +11,6 @@ class AppLanguage extends GetxController {
   void onInit() async {
     super.onInit();
     LanguageStorage localStorage = LanguageStorage();
-
     appLocale = await localStorage.languageSelected == null
         ? 'ar'
         : await localStorage.languageSelected;

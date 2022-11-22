@@ -84,8 +84,6 @@ class TodoController extends GetxController {
     }
   }
 
-  //*************filter by name ************************ */
-
   // *************get complete tasks ***********************
 
   Future<void> getData(String uid) async {
