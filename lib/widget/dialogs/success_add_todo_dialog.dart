@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 class AddSuccessfullyTodo extends StatelessWidget {
   const AddSuccessfullyTodo({
@@ -16,7 +17,7 @@ class AddSuccessfullyTodo extends StatelessWidget {
       ),
       child: AlertDialog(
         title: Text(
-          'Done..',
+          'Done'.tr,
           style: TextStyle(fontSize: 25),
         ),
         content: SizedBox(
@@ -24,7 +25,7 @@ class AddSuccessfullyTodo extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'Add Successfully',
+                'Add Successfully'.tr,
               ),
               SizedBox(
                 height: 20,

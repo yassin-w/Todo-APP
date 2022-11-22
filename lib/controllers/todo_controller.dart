@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, deprecated_member_use, prefer_collection_literals, no_leading_underscores_for_local_identifiers, avoid_print, unnecessary_overrides, unnecessary_string_interpolations, file_names
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, deprecated_member_use, prefer_collection_literals, no_leading_underscores_for_local_identifiers, avoid_print, unnecessary_overrides, unnecessary_string_interpolations, file_names, library_prefixes
 import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart' as Firebase_Storage;
+
 import 'package:get/get.dart';
 import 'package:todo_app/controllers/auth_controller.dart';
 import '../models/todo_model.dart';
@@ -13,6 +15,8 @@ class TodoController extends GetxController {
   RxList tasksByName = [].obs;
   RxList complete_tasks = [].obs;
 
+  final Firebase_Storage.FirebaseStorage storage =
+      Firebase_Storage.FirebaseStorage.instance;
   @override
   void onInit() async {
     getData(uid);
@@ -20,8 +24,15 @@ class TodoController extends GetxController {
     super.onInit();
   }
 
-  Future<void> addTodo(String name, String description, String date,
-      bool isComplete, String uid) async {
+  Future<void> addTodo(
+      String name,
+      String description,
+      String date,
+      bool isComplete,
+      String image,
+      String uid,
+      double lat,
+      double long) async {
     return FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
@@ -32,7 +43,10 @@ class TodoController extends GetxController {
           'date': date,
           'isComplete': isComplete,
           'userId': uid,
-          'dateCreated': Timestamp.now()
+          'dateCreated': Timestamp.now(),
+          'image': image,
+          'latitude': lat,
+          'longitude': long
         })
         .then((value) => print("todo data added "))
         .catchError((error) => print("can not add"));
@@ -58,7 +72,9 @@ class TodoController extends GetxController {
               date: item['date'],
               isComplete: item['isComplete'],
               userId: item['userId'],
-              dateCreated: item['dateCreated']),
+              dateCreated: item['dateCreated'],
+              lat: item['latitude'],
+              long: item['longitude']),
         );
       }
       update();
@@ -90,7 +106,9 @@ class TodoController extends GetxController {
               date: item['date'],
               isComplete: item['isComplete'],
               userId: item['userId'],
-              dateCreated: item['dateCreated']),
+              dateCreated: item['dateCreated'],
+              lat: item['latitude'],
+              long: item['longitude']),
         );
       }
       update();

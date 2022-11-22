@@ -18,5 +18,18 @@ const Map<String, String> en = {
   'filter': 'Filter',
   'choose language: ': 'choose language: ',
   'Dark theme': 'Dark theme',
-  'tasks done': 'tasks done'
+  'tasks done': 'tasks done',
+  'add location': 'add location',
+  'Locations': 'Locations',
+  'Save': 'Save',
+  'Cancel': 'Cancel',
+  'delete': 'delete',
+  'Are you sure?': 'Are you sure?',
+  'Do you really want to delete these records? This process cannot be undone.':
+      'Do you really want to delete these records? This process cannot be undone.',
+  'Add Successfully': 'Add Successfully',
+  'Done': 'Done',
+  'update Successfully': 'update Successfully',
+  'todo information': 'todo information',
+  'update': 'update',
 };

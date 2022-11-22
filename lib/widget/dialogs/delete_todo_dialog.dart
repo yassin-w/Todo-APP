@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../../controllers/auth_controller.dart';
 import '../../controllers/todo_controller.dart';
@@ -27,14 +28,14 @@ class DeleteTodoDialog extends StatelessWidget {
       child: AlertDialog(
         actions: [
           ElevatedButton(
-            child: Text("Cancel"),
+            child: Text("Cancel".tr),
             onPressed: () {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => HomePage()));
             },
           ),
           ElevatedButton(
-            child: Text("delete"),
+            child: Text("delete".tr),
             onPressed: () {
               todoController.removeTodo(
                   widget.id, AuthController.instance.auth.currentUser!.uid);
@@ -53,13 +54,14 @@ class DeleteTodoDialog extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'Are you sure?',
+                'Are you sure?'.tr,
               ),
               SizedBox(
                 height: 10,
               ),
               Text(
-                  "Do you really want to delete these records? This process cannot be undone.")
+                  'Do you really want to delete these records? This process cannot be undone.'
+                      .tr)
             ],
           ),
         ),

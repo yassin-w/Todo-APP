@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:todo_app/widget/dialogs/success_update_todo_dialog.dart';
@@ -41,7 +40,7 @@ class UpdateTodoDialog extends StatelessWidget {
         child: AlertDialog(
           actions: [
             ElevatedButton(
-              child: Text("Cancel"),
+              child: Text("Cancel".tr),
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => HomePage()));
@@ -74,7 +73,7 @@ class UpdateTodoDialog extends StatelessWidget {
               ),
             ),
           ],
-          title: Text('todo information'),
+          title: Text('todo information'.tr),
           content: SingleChildScrollView(
             child: SizedBox(
               child: Column(
