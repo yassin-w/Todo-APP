@@ -6,14 +6,17 @@ import 'package:firebase_storage/firebase_storage.dart' as Firebase_Storage;
 
 import 'package:get/get.dart';
 import 'package:todo_app/controllers/auth_controller.dart';
-import '../models/todo_model.dart';
+import 'package:todo_app/models/db_helper.dart';
+import '../models/todo/todo_model.dart';
 
 class TodoController extends GetxController {
-  Rx<List<Todo>> tasks = Rx<List<Todo>>([]);
-  List<Todo> get todos => tasks.value;
+  Rx<List<TodoModel>> tasks = Rx<List<TodoModel>>([]);
+  List<TodoModel> get todos => tasks.value;
   String uid = AuthController.instance.auth.currentUser!.uid;
   RxList tasksByName = [].obs;
   RxList complete_tasks = [].obs;
+
+  dbHelper db = dbHelper();
 
   final Firebase_Storage.FirebaseStorage storage =
       Firebase_Storage.FirebaseStorage.instance;
@@ -65,13 +68,14 @@ class TodoController extends GetxController {
 
       for (var item in _taskSnap.docs) {
         complete_tasks.add(
-          Todo(
+          TodoModel(
               id: item.id,
               name: item['name'],
               description: item['description'],
               date: item['date'],
               isComplete: item['isComplete'],
               userId: item['userId'],
+              image: item['image'],
               dateCreated: item['dateCreated'],
               lat: item['latitude'],
               long: item['longitude']),
@@ -83,8 +87,6 @@ class TodoController extends GetxController {
       print(e.toString());
     }
   }
-
-  //*************filter by name ************************ */
 
   // *************get complete tasks ***********************
 
@@ -99,13 +101,14 @@ class TodoController extends GetxController {
       todos.clear();
       for (var item in _taskSnap.docs) {
         todos.add(
-          Todo(
+          TodoModel(
               id: item.id,
               name: item['name'],
               description: item['description'],
               date: item['date'],
               isComplete: item['isComplete'],
               userId: item['userId'],
+              image: item['image'],
               dateCreated: item['dateCreated'],
               lat: item['latitude'],
               long: item['longitude']),

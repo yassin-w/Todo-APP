@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, unused_local_variable, no_leading_underscores_for_local_identifiers, unused_element, prefer_const_constructors_in_immutables, avoid_unnecessary_containers, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import '../../models/todo_model.dart';
+import '../../models/todo/todo_model.dart';
 import '../../widget/cards/card.dart';
 import '../../controllers/auth_controller.dart';
 import '../../controllers/todo_controller.dart';
@@ -15,8 +15,8 @@ class ListTodos extends StatefulWidget {
 }
 
 class _ListTodosState extends State<ListTodos> {
-  List<Todo> todos = [];
-  List<Todo> finalRes = [];
+  List<TodoModel> todos = [];
+  List<TodoModel> finalRes = [];
   final controller = TextEditingController();
   final todoController = Get.put(TodoController());
 
@@ -26,6 +26,7 @@ class _ListTodosState extends State<ListTodos> {
     todoController.getData(AuthController.instance.auth.currentUser!.uid);
     todos = todoController.todos;
     finalRes = todos;
+
     super.initState();
   }
 
@@ -91,7 +92,7 @@ class _ListTodosState extends State<ListTodos> {
   }
 
   void _SearchTodo(String query) {
-    List<Todo> result = [];
+    List<TodoModel> result = [];
     if (query == '') {
       result = todos;
     } else {
