@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../controllers/auth_controller.dart';
 import '../../pages/todos/home_page.dart';
 import '../../utils/validator/validator.dart';

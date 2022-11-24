@@ -2,12 +2,13 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Todo {
+class TodoModel {
   String id;
   String name;
   String description;
   String date;
   Timestamp dateCreated;
+  String image;
   bool isComplete;
   String userId;
   double lat;
@@ -21,13 +22,14 @@ class Todo {
   //     required this.isComplete,
   //     required this.userId});
 
-  Todo(
+  TodoModel(
       {required this.id,
       required this.name,
       required this.description,
       required this.date,
       required this.dateCreated,
       required this.isComplete,
+      required this.image,
       required this.userId,
       required this.lat,
       required this.long});
