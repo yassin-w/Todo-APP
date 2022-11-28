@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously, avoid_print, unnecessary_null_comparison, sort_child_properties_last, non_constant_identifier_names
 
+import 'dart:convert';
 import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -15,7 +18,8 @@ import 'package:todo_app/utils/validator/validator.dart';
 import 'package:todo_app/widget/dialogs/map_dialog.dart';
 import '../../controllers/auth_controller.dart';
 import '../../pages/todos/home_page.dart';
-import '../dialogs/success_add_todo_dialog.dart';
+
+import 'package:timezone/data/latest.dart' as tz;
 
 class AddTodoForm extends StatefulWidget {
   const AddTodoForm({
@@ -39,6 +43,7 @@ class _AddTodoFormState extends State<AddTodoForm> {
   String name = '';
   String date = '';
   String description = '';
+
   _saveToShared_Preferences() async {
     s_prefs = await SharedPreferences.getInstance();
     s_prefs.setString("name", nameController.text.toString());
@@ -70,10 +75,49 @@ class _AddTodoFormState extends State<AddTodoForm> {
     });
   }
 
+
+  void sendNotification(String token, String title, String body) async {
+    var serverKey =
+        'AAAA2Shp5Ks:APA91bHbjp1YrHAr5iwEbSEbVce24N1g08Fwqv5HRWM7Jvj12AyHRbpMf4DScNfJpRO2VS7ZnjFHEA77C-1GI_8hcQKKbwU9BxwAo4rJobyZvHz1xnnDHgtvPrPyFPo9-phVp5r1nZ2Y';
+
+
+
+    try {
+
+        http.Response response = await http.post(
+          Uri.parse('https://fcm.googleapis.com/fcm/send'),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'Authorization': 'key=$serverKey',
+          },
+          body: jsonEncode(
+            <String, dynamic>{
+              'notification': <String, dynamic>{
+                'body': 'this is a body',
+                'title': 'this is a title'
+              },
+              'priority': 'high',
+              'data': <String, dynamic>{
+                'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+                'id': '1',
+                'status': 'done'
+              },
+              'to': token,
+            },
+          ),
+        );
+        print(response.statusCode) ;
+
+    } catch (e) {
+      print("error push notification");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _showSavedValue();
+    tz.initializeTimeZones();
   }
 
   final focus = FocusNode();
@@ -284,9 +328,7 @@ class _AddTodoFormState extends State<AddTodoForm> {
                     )),
                 width: 250,
                 padding: EdgeInsets.symmetric(horizontal: 16),
-                child: TextField(
-                  focusNode: focus,
-                  textInputAction: TextInputAction.next,
+                child: TextFormField(
                   controller: descriptionController,
                   decoration: InputDecoration(
                       hintText: "Todo Description".tr,
@@ -308,6 +350,9 @@ class _AddTodoFormState extends State<AddTodoForm> {
                 child: TextFormField(
                   focusNode: focus,
                   textInputAction: TextInputAction.next,
+                  onFieldSubmitted: (v) {
+                    FocusScope.of(context).requestFocus(focus);
+                  },
                   readOnly: true,
                   controller: dateController,
                   decoration: InputDecoration(
@@ -387,12 +432,24 @@ class _AddTodoFormState extends State<AddTodoForm> {
               ElevatedButton(
                 onPressed: () async {
                   if (formKey.currentState!.validate()) {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AddSuccessfullyTodo();
-                        });
-                    print(locationPoint.latitude);
+                    // showDialog(
+                    //     context: context,
+                    //     builder: (BuildContext context) {
+                    //       return AddSuccessfullyTodo();
+                    //     });
+                    var uid = AuthController.instance.auth.currentUser!.uid;
+                    QuerySnapshot<Map<String, dynamic>> snap =
+                        await FirebaseFirestore.instance
+                            .collection('users')
+                            .doc(uid)
+                            .collection('tokens')
+                            .get();
+                    print(
+                        "******************************** snap here *************************************");
+                    for (var item in snap.docs) {
+                      print(item.id) ;
+                      sendNotification(item.id, "title", "body") ;
+                    }
 
                     todoController.addTodo(
                         nameController.text.trim(),
@@ -403,7 +460,12 @@ class _AddTodoFormState extends State<AddTodoForm> {
                         AuthController.instance.auth.currentUser!.uid,
                         locationPoint.latitude,
                         locationPoint.longitude);
+
                     await Future.delayed(Duration(seconds: 2));
+                    /*NotificationService().showNotification(
+                         1, "Todo Added", "Added successfully", 4);
+                    */
+
                     _delete_Shared_Preferences();
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => HomePage()));

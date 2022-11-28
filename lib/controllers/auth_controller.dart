@@ -1,12 +1,15 @@
 // ignore_for_file: unused_field, unnecessary_overrides, prefer_const_constructors, unused_element, file_names, avoid_print, unnecessary_null_comparison
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/pages/authentication/login_page.dart';
 import 'package:todo_app/pages/todos/home_page.dart';
 
+
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
+
   late Rx<User?> _user;
 
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -31,8 +34,7 @@ class AuthController extends GetxController {
 
   void register(String email, String password) async {
     try {
-      await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      auth.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       String error = '';
       if (e.code == 'email-already-in-use') {
@@ -56,7 +58,7 @@ class AuthController extends GetxController {
 
   void login(String email, String password) async {
     try {
-      await auth.signInWithEmailAndPassword(email: email, password: password);
+      auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       String error = '';
       if (e.code == 'user-not-found') {
@@ -83,7 +85,15 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> logout() async {
+  Future<void> logout(String uid, String deviceToken) async {
+  await   FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('tokens')
+        .doc(deviceToken)
+        .delete();
     await auth.signOut();
+
+    Get.to(Login());
   }
 }

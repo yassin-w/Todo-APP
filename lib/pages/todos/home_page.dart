@@ -1,4 +1,8 @@
 // ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, unused_import
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/pages/todos/add_todo_page.dart';
@@ -31,6 +35,78 @@ class _NavState extends State<HomePage> {
     });
   }
 
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+  String deviceToken = " ";
+
+  // Future<void> _firebaseMessagingBackgroundHandler(
+  //     RemoteMessage message) async {
+  //   // If you're going to use other Firebase services in the background, such as Firestore,
+  //   // make sure you call `initializeApp` before using other Firebase services.
+  //   await Firebase.initializeApp();
+
+  //   print("Handling a background message: ${message.messageId}");
+  // }
+
+  requestPermission() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+    print(settings.authorizationStatus);
+  }
+
+  getToken() async {
+    await FirebaseMessaging.instance.getToken().then((value) {
+      setState(() {
+        deviceToken = value!;
+        print('deviceToken is ----> $deviceToken');
+      });
+      savetoken(value!);
+    });
+  }
+
+  Future<void> savetoken(String token) async {
+    await FirebaseFirestore.instance.collection('UserToken').doc('user1').set({
+      'token': token,
+    });
+  }
+
+  /// Get the token, save it to the database for current user
+  _saveDeviceToken() async {
+    // Get the current user
+    String uid = AuthController().auth.currentUser!.uid;
+    // FirebaseUser user = await _auth.currentUser();
+    // Get the token for this device
+    String? fcmToken = await _fcm.getToken();
+
+    // Save it to Firestore
+    if (fcmToken != null) {
+      var tokens =
+          _db.collection('users').doc(uid).collection('tokens').doc(fcmToken);
+
+      await tokens.set({
+        'token': fcmToken,
+        'createdAt': FieldValue.serverTimestamp(), // optional
+        'platform': Platform.operatingSystem // optional
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    requestPermission();
+    getToken();
+    _saveDeviceToken() ;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +120,7 @@ class _NavState extends State<HomePage> {
         actions: [
           IconButton(
               onPressed: () {
-                AuthController.instance.logout();
+                AuthController.instance.logout(AuthController.instance.auth.currentUser!.uid,deviceToken);
               },
               icon: Icon(Icons.logout)),
         ],
