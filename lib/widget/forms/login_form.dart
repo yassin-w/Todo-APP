@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../controllers/auth_controller.dart';
 import '../../utils/validator/validator.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
   const LoginForm({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<LoginForm> createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +76,11 @@ class LoginForm extends StatelessWidget {
               height: 17,
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (formKey.currentState!.validate()) {
                   AuthController.instance.login(emailController.text.trim(),
                       passwordController.text.trim());
+                  // Change here
                 }
               },
               style: ButtonStyle(
